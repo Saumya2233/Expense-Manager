@@ -1,65 +1,140 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Image from "next/image";
+import { CiWallet } from "react-icons/ci";
+import { FaRegEye } from "react-icons/fa";
+import { MdOutlineMail, MdLockOutline } from "react-icons/md";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { images } from "@/constant/images";
+import { toast } from "react-toastify";
+
+export default function LoginPage() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (email === "abc@gmail.com" && password === "123456") {
+      router.push(`/dashboard?name=${email}`);
+    } else {
+      toast.error("Invalid email or password");
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="auth-page">
+      {/* LEFT IMAGE SECTION */}
+      <div className="auth-image-panel">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src={images.login}
+          alt="money"
+          fill
           priority
+          className="auth-image"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+      </div>
+
+      {/* RIGHT LOGIN SECTION */}
+      <div className="auth-content">
+        <div className="">
+          {/* LOGO */}
+          <div className="auth-logo">
+            <CiWallet className="auth-logo-icon" />
+
+            <h1 className="auth-logo-title">
+              Spend
+              <span className="auth-accent">Wise</span>
+            </h1>
+          </div>
+
+          {/* HEADING */}
+          <div className="auth-heading">
+            <h4 className="auth-heading-title">
+              Welcome <span className="auth-accent">Back</span>
+            </h4>
+
+            <p className="auth-heading-text">
+              Login to manage your expenses and track your financial goals.
+            </p>
+          </div>
+
+          {/* FORM */}
+          <form className="auth-form" onSubmit={handleLogin} autoComplete="off">
+            {/* EMAIL */}
+            <div>
+              <label htmlFor="email" className="auth-label">
+                Email
+              </label>
+
+              <div className="auth-field">
+                <MdOutlineMail className="auth-field-icon" />
+
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  className="auth-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="off"
+                />
+              </div>
+            </div>
+
+            {/* PASSWORD */}
+            <div>
+              <label htmlFor="password" className="auth-label">
+                Password
+              </label>
+
+              <div className="auth-field">
+                <MdLockOutline className="auth-field-icon" />
+
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  className="auth-password-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="off"
+                />
+
+                <FaRegEye className="auth-eye-icon" />
+              </div>
+            </div>
+
+            {/* OPTIONS */}
+            <div className="auth-options">
+              <div className="auth-row">
+                <input type="checkbox" className="auth-checkbox" />
+
+                <p className="auth-muted-text">Remember me</p>
+              </div>
+
+              <button type="button" className="auth-text-button">
+                Forgot password?
+              </button>
+            </div>
+
+            {/* LOGIN BUTTON */}
+            <button type="submit" className="auth-submit">
+              Login
+            </button>
+          </form>
+
+          {/* REGISTER */}
+          <p className="auth-footer">
+            Don&apos;t have an account?{" "}
+            <span className="auth-link">Register</span>
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
