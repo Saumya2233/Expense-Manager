@@ -3,10 +3,7 @@
 import Link from "next/link";
 import "../../app/globals.css";
 
-import {
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import {
   LayoutDashboard,
@@ -22,54 +19,45 @@ const menuItems = [
   {
     title: "Dashboard",
     icon: LayoutDashboard,
-    tab: "dashboard",
-    href: "/dashboard?tab=dashboard",
+    href: "/dashboard",
   },
 
   {
     title: "Transactions",
     icon: ReceiptText,
-    tab: "transactions",
-    href: "/dashboard/transactions?tab=transactions",
+    href: "/dashboard/transactions",
   },
 
   {
     title: "Expenses",
     icon: ChartNoAxesCombined,
-    tab: "expenses",
-    href: "/dashboard/expenses?tab=expenses",
+    href: "/dashboard/expenses",
   },
 
   {
     title: "Budgets",
     icon: WalletCards,
-    tab: "budget",
-    href: "/dashboard/budget?tab=budget",
+    href: "/dashboard/budget",
   },
 
   {
     title: "Notifications",
     icon: Bell,
-    tab: "notifications",
-    href: "/dashboard/notifications?tab=notifications",
+    href: "/dashboard/notifications",
   },
 
   {
     title: "How it works",
     icon: Settings,
-    tab: "howthiswork",
-    href: "/dashboard/howthiswork?tab=howthiswork",
+    href: "/dashboard/howthiswork",
   },
 ];
 
 export default function Sidebar() {
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-
-  // CURRENT ACTIVE TAB
-  const activeTab =
-    searchParams.get("tab") || "dashboard";
+  // FIXED
+  const pathname = usePathname();
 
   return (
     <aside className="sidebar">
@@ -81,9 +69,7 @@ export default function Sidebar() {
           <div>
             <h1 className="sidebar-title">ExpenseX</h1>
 
-            <p className="sidebar-subtitle">
-              Finance Manager
-            </p>
+            <p className="sidebar-subtitle">Finance Manager</p>
           </div>
         </div>
 
@@ -92,17 +78,20 @@ export default function Sidebar() {
           {menuItems.map((item) => {
             const Icon = item.icon;
 
-            // QUERY BASED ACTIVE CHECK
-            const isActive = activeTab === item.tab;
+            // FIXED ACTIVE LOGIC
+            const isActive =
+              item.href === "/dashboard"
+                ? pathname === "/dashboard"
+                : pathname.startsWith(item.href);
 
             return (
               <Link
-                key={item.tab}
+                key={item.href}
                 href={item.href}
                 className={`sidebar-item transition-all duration-200 ${
                   isActive
-                    ? "sidebar-item-active bg-[#a2d2ff] text-black"
-                    : ""
+                    ? "sidebar-item-active bg-[#a2d2ff] !text-black hover:bg-[#a2d2ff]"
+                    : "hover:bg-black hover:text-white"
                 }`}
               >
                 <Icon size={20} />
@@ -122,7 +111,6 @@ export default function Sidebar() {
             onClick={() => router.push("/")}
           >
             Logout
-
             <LogOut size={18} />
           </button>
         </div>
