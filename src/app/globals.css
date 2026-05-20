@@ -91,7 +91,7 @@ textarea {
   }
 
   .auth-page {
-    @apply flex min-h-screen overflow-hidden bg-[#112A46];
+    @apply flex min-h-screen overflow-hidden bg-[#13161D];
   }
 
   .auth-image-panel {
@@ -103,7 +103,7 @@ textarea {
   }
 
   .auth-content {
-    @apply flex flex-1 items-center justify-center bg-[#112A46] px-6;
+    @apply flex flex-1 items-center justify-center bg-black px-6;
   }
 
   .auth-container {
