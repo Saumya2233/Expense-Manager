@@ -54,15 +54,14 @@ export default function Topbar() {
           </div>
 
           {/* NOTIFICATION */}
-          <button className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-[#112A46]/8 text-[#112A46] transition duration-300 hover:bg-[#FDF1A5]">
+          <button className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-[#112A46]/8 text-[#112A46] transition duration-300 hover:bg-[#FDF1A5]" onClick={() => router.push("/dashboard/notifications?tab=contact")}>
             <Bell size={20} />
 
-            <span className="absolute right-3 top-3 h-2 w-2 rounded-full bg-[#FDF1A5] ring-2 ring-white" />
           </button>
 
           {/* ADD EXPENSE */}
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => router.push("/dashboard/expenses?tab=expenses")}
             className="theme-button-light flex items-center gap-2"
           >
             <Plus size={16} />
@@ -75,7 +74,11 @@ export default function Topbar() {
               S
             </div>
 
-            <div>
+            <div onClick={()=>
+              {
+                router.push("/dashboard/profile")
+              }
+            }>
               <p className="text-sm font-semibold text-[#112A46]">{names}</p>
 
               <p className="text-xs text-[#112A46]/55">Premium Plan</p>
